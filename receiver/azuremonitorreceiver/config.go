@@ -14,6 +14,7 @@ import (
 )
 
 const (
+	azureChinaCloud		= "AzureChinaCloud"
 	azureCloud           = "AzureCloud"
 	azureGovernmentCloud = "AzureUSGovernment"
 )
@@ -292,7 +293,7 @@ func (c Config) Validate() (err error) {
 		return fmt.Errorf("authentication %v is not supported. supported authentications include [%v,%v,%v,%v]", c.Authentication, servicePrincipal, workloadIdentity, managedIdentity, defaultCredentials)
 	}
 
-	if c.Cloud != azureCloud && c.Cloud != azureGovernmentCloud {
+	if c.Cloud != azureCloud && c.Cloud != azureGovernmentCloud && c.Cloud != azureChinaCloud {
 		err = multierr.Append(err, errInvalidCloud)
 	}
 

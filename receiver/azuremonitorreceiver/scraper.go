@@ -124,6 +124,8 @@ type armClient interface {
 func (s *azureScraper) getArmClientOptions() *arm.ClientOptions {
 	var cloudToUse cloud.Configuration
 	switch s.cfg.Cloud {
+	case azureChinaCloud:
+		cloudToUse = cloud.AzureChina
 	case azureGovernmentCloud:
 		cloudToUse = cloud.AzureGovernment
 	default:
@@ -403,8 +405,8 @@ func (s *azureScraper) getResourceMetricsValues(ctx context.Context, resourceID 
 				&opts,
 			)
 			if err != nil {
-				s.settings.Logger.Error("failed to get Azure Metrics values data", zap.Error(err))
-				return
+				s.settings.Logger.Error("custom break, failed to get Azure Metrics values data", zap.Error(err))
+				break
 			}
 
 			for _, metric := range result.Value {
